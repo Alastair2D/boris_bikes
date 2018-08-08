@@ -23,9 +23,8 @@ describe DockingStation do
     end
 
     it 'raises an error if trying to #dock(bike) when at capacity' do
-        bike = Bike.new
-        bike2 = Bike.new
-        subject.dock(bike)
-        expect{subject.dock(bike2)}.to raise_error "Error - no space available"
+        20.times {subject.dock(Bike.new)}
+        expect{subject.dock(Bike.new)}.to raise_error "Error - no space available"
     end
+
 end

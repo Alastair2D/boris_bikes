@@ -1,8 +1,10 @@
 class DockingStation 
-    attr_reader :bikes
+    attr_reader :bikes, :capacity
+
+    CAPACITY = 20
 
     def initialize
-        @capacity = 1
+        @capacity = CAPACITY
         @bikes = []
     end
 
@@ -11,8 +13,13 @@ class DockingStation
         @bikes.pop
     end
 
+    def full?
+        @bikes.length >= CAPACITY
+    end
+
     def dock(bike)
-        fail "Error - no space available" if @bikes.length >= @capacity
+        #fail "Error - no space available" if @bikes.length >= @capacity
+        fail "Error - no space available" if full?
         @bikes << bike
     end
 
