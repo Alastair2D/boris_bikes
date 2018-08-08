@@ -9,12 +9,23 @@ describe DockingStation do
     end
 
     it 'releases working bikes' do
-        bike = subject.release_bike
+        bike = Bike.new
         expect(bike).to be_working
     end
     
     it 'allows bike to be docked' do
-        bike = subject.release_bike
+        bike = Bike.new
         expect(subject.dock(bike)).to include(bike)
+    end
+
+    it 'raises an error when there are no bikes' do 
+        expect{subject.release_bike}.to raise_error "Error - no bikes available"
+    end
+
+    it 'raises an error if trying to #dock(bike) when at capacity' do
+        bike = Bike.new
+        bike2 = Bike.new
+        subject.dock(bike)
+        expect{subject.dock(bike2)}.to raise_error "Error - no space available"
     end
 end
