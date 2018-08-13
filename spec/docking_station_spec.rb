@@ -18,7 +18,7 @@ describe DockingStation do
 
     describe '#release_bike' do 
         before { subject.bikes << mockBike }
-        it 'responds to #release_bike' do   # One line syntax: it { is_expected.to respond_to(:release_bike) }
+        it 'responds to #release_bike' do                      # Or: it { is_expected.to respond_to(:release_bike) }
             expect(subject).to respond_to :release_bike     
         end
         it 'releases working bikes' do
@@ -28,7 +28,6 @@ describe DockingStation do
         
     describe '#dock(bike)' do 
         it 'allows bike to be docked' do
-            # allow(:mockBike).to receive(:length).and_return(0)
             expect(subject.dock(mockBike)).to include(mockBike)
         end
         it 'raises an error when there are no bikes' do 
