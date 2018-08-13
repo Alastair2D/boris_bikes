@@ -10,33 +10,34 @@ describe DockingStation do
             expect(subject.capacity).to eq 20
         end
         it 'allows variable capacity to be set' do 
-            expect(subject(50).capacity).to eq 50   
+        small_capacity = 10 
+        small_station = DockingStation.new(small_capacity)     # small_station = DockingStation.new(10) 
+        expect(small_station.capacity).to eq 10                # expect(small_station.capacity).to eq 10
         end
     end
 
-
-    it { is_expected.to respond_to(:release_bike) }
-
-    it 'responds to #release_bike' do 
-    expect(subject).to respond_to :release_bike
+    describe '#release_bike' do 
+        before { subject.bikes << mockBike }
+        it 'responds to #release_bike' do   # One line syntax: it { is_expected.to respond_to(:release_bike) }
+            expect(subject).to respond_to :release_bike     
+        end
+        it 'releases working bikes' do
+            expect(subject.release_bike).to eq(mockBike)
+        end
     end
-
-    it 'releases working bikes' do
-        bike = Bike.new
-        expect(bike).to be_working
-    end
-    
-    it 'allows bike to be docked' do
-        expect(subject.dock(mockBike))              expect(subject.dock(bike)).to include(bike)
-    end
-
-    it 'raises an error when there are no bikes' do 
-        expect{subject.release_bike}.to raise_error "Error - no bikes available"
-    end
-
-    it 'raises an error if trying to #dock(bike) when at capacity' do
-        20.times {subject.dock(Bike.new)}
-        expect{subject.dock(Bike.new)}.to raise_error "Error - no space available"
+        
+    describe '#dock(bike)' do 
+        it 'allows bike to be docked' do
+            # allow(:mockBike).to receive(:length).and_return(0)
+            expect(subject.dock(mockBike)).to include(mockBike)
+        end
+        it 'raises an error when there are no bikes' do 
+            expect { subject.release_bike }.to raise_error "Error - no bikes available"
+        end
+        it 'raises an error if trying to #dock(bike) when at capacity' do
+            20.times { subject.dock(mockBike) }
+            expect { subject.dock(mockBike) }.to raise_error "Error - no space available"
+        end
     end
 
 end

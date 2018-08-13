@@ -1,3 +1,5 @@
+require_relative 'bike'
+
 class DockingStation 
     attr_reader :bikes, :capacity
 
@@ -14,11 +16,11 @@ class DockingStation
     end
 
     def full?
-        @bikes.length >= CAPACITY
+        @bikes.length >= @capacity
     end
 
     def dock(bike)
-        fail "Error - no space available" if bikes.length >= @capacity
+        fail "Error - no space available" if @bikes.length >= @capacity
         fail "Error - no space available" if full?
         @bikes << bike
     end
