@@ -13,17 +13,17 @@ DEFAULT_CAPACITY = 20
   end  
   
   def release_bike
-    fail 'No bikes available' if @bikes.empty? && @broken_bikes.empty?
-    fail 'No working bikes available' if @bikes.empty?
+    fail 'Error - no bikes available' if @bikes.empty? && @broken_bikes.empty?
+    fail 'Error - no working bikes available' if @bikes.empty?
     @bikes.pop
   end  
   
   def dock(bike)
-    fail "Error - no space available" if @bikes.length >= @capacity
     fail "Error - no space available" if full?
-    @bikes << bike
+    bike.working ? @bikes.push(bike) : @broken_bikes.push(bike)
   end  
 
+  
 private    
   
   def full?
