@@ -3,11 +3,7 @@ require './lib/docking_station.rb'
 
 # Bike Features
 
-
 # DockingStation Features
-
-
-
 
 # Van Features  
 1. collect_broken_bikes
