@@ -4,9 +4,26 @@ require 'bike'
 
 describe Van do
     subject(:van) { Van.new }
-    let(:mockDockingStation) { double :dockingstation}
+    let(:mockDockingStation) { double :dockingstation}  # Can you say e.g. { double : dockingstation, @broken_bikes = [mockBrokenBike] }
     let(:mockBike) { double :bike }
     let(:mockBrokenBike) { double :bike, working => false }
+
+    describe '#collect_broken_bikes' do 
+        it 'raises an error if @broken_bikes is empty' do 
+        ds1 = DockingStation.new
+        # bb1 = Bike.new(working = false)
+        expect { subject.collect_broken_bikes(ds1) }.to raise_error 'Error - no broken bikes here'
+        end    
+
+        # allow(mockDockingStation).to receive(:broken_bikes)
+        # expect { subject.collect_broken_bikes(mockDockingStation) }.to raise_error 'Error - no broken bikes here'
+        # end 
+
+        # before { mockDockingStation.broken_bikes << mockBrokenBike }
+        # it 'picks up @broken_bikes and adds them into @broken_bikes_to_fix' do 
+        #   expect(subject.broken_bikes_to_fix). to include mockBrokenBike
+        # end        
+    end
 
 #   describe '#collect_broken_bikes' do
 #     before { mockDockingStation.broken_bikes << mockBrokenBike }
