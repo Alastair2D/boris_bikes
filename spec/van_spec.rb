@@ -8,6 +8,9 @@ describe Van do
     let(:mockDockingStation) { double :dockingstation}  # Can you say e.g. { double : dockingstation, @broken_bikes = [mockBrokenBike] }
     let(:mockBike) { double :bike }
     let(:mockBrokenBike) { double :bike, working => false }
+    let(:mockGarage) { double :garage }
+    let(:mockRepairedBike) { double :bike }
+
 
     describe '#load_broken_bikes' do 
         it 'raises an error if @broken_bikes is empty' do 
@@ -24,16 +27,16 @@ describe Van do
     #     end        
     end
 
-    describe '#clear_broken_bikes' do 
-        it 'empties @broken_bikes' do 
-            ds1 = DockingStation.new
-            bb1 = Bike.new(working = false)
-            ds1.dock(bb1)
-            # subject.clear_broken_bikes(ds1) 
-            # expect(ds1.broken_bikes).to be empty 
-            expect(subject.clear_broken_bikes(ds1)).to be [] # or nil or [] or to be empty?
-        end
-    end
+    # describe '#clear_broken_bikes' do 
+    #     it 'empties @broken_bikes' do 
+    #         ds1 = DockingStation.new
+    #         bb1 = Bike.new(working = false)
+    #         ds1.dock(bb1)
+    #         # subject.clear_broken_bikes(ds1) 
+    #         # expect(ds1.broken_bikes).to be empty 
+    #         expect(subject.clear_broken_bikes(ds1)).to be [] # or nil or [] or to be empty?
+    #     end
+    # end
 
     describe '#deliver_broken_bikes' do 
         it 'takes @broken_bikes_for_garage to garage' do 
@@ -48,10 +51,15 @@ describe Van do
     end
 
     describe '#load_repaired_bikes' do 
-        it 'raises an error if @repaired_bikes is empty' do 
-            g1 = Garage.new                                                     
+        it 'raises an error if @repaired_bikes is empty' do   
+            g1 = Garage.new                           # allow(mockGarage).to receive(:repaired_bikes)                        
             expect { subject.load_repaired_bikes(g1) }.to raise_error 'Error - no repaired bikes' 
         end    
+        it 'picks up @repaired_bikes and puts them in @fixed_bikes' do
+            g1 = Garage.new
+            g1.repaired_bikes << mockRepairedBike
+            expect(subject.load_repaired_bikes(g1)).to include mockRepairedBike
+        end
     end
 
 

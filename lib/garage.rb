@@ -7,4 +7,10 @@ class Garage
         @repaired_bikes = []
     end
 
+    def fix(bike)
+        bike = bikes_awaiting_repair.sample
+        bikes_awaiting_repair.delete(bike)
+        repaired_bikes << bike
+    end
+
 end
