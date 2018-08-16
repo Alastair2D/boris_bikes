@@ -55,26 +55,19 @@ describe Van do
             g1 = Garage.new                           # allow(mockGarage).to receive(:repaired_bikes)                        
             expect { subject.load_repaired_bikes(g1) }.to raise_error 'Error - no repaired bikes' 
         end    
-        it 'picks up @repaired_bikes and puts them in @fixed_bikes' do
+        it 'picks up @repaired_bikes and puts them in @fixed_bikes_to_distrubute' do
             g1 = Garage.new
             g1.repaired_bikes << mockRepairedBike
             expect(subject.load_repaired_bikes(g1)).to include mockRepairedBike
         end
     end
 
-
-    #   describe '#collect_repaired_bikes' do
-    #     it 'picks up repaired bikes from the garage' do
-    #       expect(subject.collect_repaired_bikes(garage_fixed)).to eq [bike]
-    #     end
-    #   end
-
-    #   describe '#distribute_repaired_bikes' do
-    #       it 'returns repaired bikes to a station' do
-    #           expect(subject.distribute_repaired_bikes(station)).to eq []
-    #       end
-    #       it 'raises an error when there are no broken bikes to distribute' do
-    #         expect(subject.distribute_repaired_bikes(station)).to raise_error 'No repaired bikes to distribute'
-    #       end
+      describe '#distribute_repaired_bikes' do
+          it 'returns repaired bikes to a station' do
+              expect(subject.distribute_repaired_bikes(station)).to eq []
+          end
+          it 'raises an error when there are no broken bikes to distribute' do
+            expect(subject.distribute_repaired_bikes(station)).to raise_error 'No repaired bikes to distribute'
+          end
 
 end
