@@ -2,7 +2,7 @@ require_relative 'docking_station'
 
 class Van
     attr_reader :all_bikes_in_van, :broken_bikes_for_garage, :fixed_bikes_to_distribute
-    attr_accessor :bikes, :broken_bikes, :bikes_awaiting_repair
+    attr_accessor :bikes, :broken_bikes, :bikes_awaiting_repair # Do I need accessors for garage.bikes_awaiting_repair #repaired_bikes
 
     def initialize
       # @all_bikes_in_van = []  
@@ -21,7 +21,8 @@ class Van
     end
 
     def deliver_broken_bikes(garage)
-      garage.bikes_awaiting_repair << broken_bikes_for_garage
+      broken_bikes_for_garage.each { |i| garage.bikes_awaiting_repair << i }
+      # garage.bikes_awaiting_repair << broken_bikes_for_garage
       # broken_bikes_for_garage.clear
     end
 
@@ -30,19 +31,11 @@ class Van
       fixed_bikes_to_distribute << garage.repaired_bikes
       # garage.repaired_bikes.clear
     end
-
-
   
-    # def collect_repaired_bikes(garage)
-    #   @bikes.concat garage.bikes
-    #   garage.bikes.clear
-    #   @bikes
-    # end
-  
-    # def distribute_repaired_bikes(station)
-    #   fail 'No repaired bikes to distribute' if @bikes.empty?
-    #   station.bikes.concat @bikes
-    #   @bikes.clear
-    #   @bikes
-    # end
+    def distribute_repaired_bikes(station)
+      fail 'Error - No repaired bikes to distribute' if fixed_bikes_to_distribute.empty?
+      
+      station.bikes << fixed_bikes_to_distribute
+      fixed_bikes_to_distribute.clear
+    end
   end

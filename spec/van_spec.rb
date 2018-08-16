@@ -46,7 +46,7 @@ describe Van do
             bb1 = Bike.new(working = false)
             ds1.dock(bb1)
             v1.load_broken_bikes(ds1)
-            expect(v1.deliver_broken_bikes(g1)).to include [[bb1]]
+            expect(v1.deliver_broken_bikes(g1)).to include [bb1]
         end
     end
 
@@ -58,16 +58,22 @@ describe Van do
         it 'picks up @repaired_bikes and puts them in @fixed_bikes_to_distrubute' do
             g1 = Garage.new
             g1.repaired_bikes << mockRepairedBike
-            expect(subject.load_repaired_bikes(g1)).to include mockRepairedBike
+            expect(subject.load_repaired_bikes(g1)).to include [mockRepairedBike]
         end
     end
 
-      describe '#distribute_repaired_bikes' do
-          it 'returns repaired bikes to a station' do
-              expect(subject.distribute_repaired_bikes(station)).to eq []
-          end
-          it 'raises an error when there are no broken bikes to distribute' do
-            expect(subject.distribute_repaired_bikes(station)).to raise_error 'No repaired bikes to distribute'
-          end
+    describe '#distribute_repaired_bikes' do
+        it 'raises an error when there are no broken bikes to distribute' do
+            allow(mockDockingStation).to receive(:bikes)
+            expect { subject.distribute_repaired_bikes(mockDockingStation) }.to raise_error 'Error - No repaired bikes to distribute'
+        end
+            it 'takes repaired bikes to a station' do
+            # subject.fixed_bikes_to_distribute << mockRepairedBike
+            subject.fixed_bikes_to_distribute << mockRepairedBike
+            allow(mockDockingStation).to receive(:bikes)
+            subject.distribute_repaired_bikes(mockDockingStation)
+            expect(subject.fixed_bikes_to_distribute).to be empty
+        end
+    end
 
 end
